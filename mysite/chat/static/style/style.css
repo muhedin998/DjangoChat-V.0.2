@@ -1,5 +1,26 @@
 #chat-log{
-    display: flex; 
-    flex-direction: column-reverse;
-    background-color: antiquewhite;
+    height: 93vh;
+    border: 1px solid black;
+    background-color: cornflowerblue;
+    flex-grow: 20;
+    flex-shrink: 0;
+    overflow-y: scroll;
+}
+body{
+    margin: 0;
+    background-color:#cfcfcf}
+.mystyle{
+    background-color: chartreuse;
+    width: 70%;
+    padding: 5px 2px;
+    border-radius: 10%;
+    margin: 2px 2px;
+    font-size: 50px;
+}
+.myst{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
 }
