@@ -6,3 +6,12 @@ from django import forms
 class Profil(User):
     def korisnik(self):
         return self.username
+
+class Message(models.Model):
+    sender = Profil
+    def __init__(self, content, sender):
+        self.content = content
+        self.sender = sender
+    
+    def poruka(self):
+        return self.content
