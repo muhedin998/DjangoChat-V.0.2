@@ -9,6 +9,7 @@ class Profil(User):
 
 class Message(models.Model):
     sender = Profil
+    content = models.TextField()
     def __init__(self, content, sender):
         self.content = content
         self.sender = sender

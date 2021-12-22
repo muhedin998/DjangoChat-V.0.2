@@ -14,7 +14,8 @@ body{
     padding: 5px 2px;
     border-radius: 20px;
     margin: 2px 2px;
-    font-size: 50px;
+    font-size: 18px;
+    font-family: 'Lucida Sans';
 }
 .myst{
     position: absolute;
