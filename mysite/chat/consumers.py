@@ -1,6 +1,8 @@
 # chat/consumers.py
 import json
+from .models import Profil, Message, Room
 from channels.generic.websocket import AsyncWebsocketConsumer
+
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -34,7 +36,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'chat_message',
                 'message': message,
-                'user' : user
+                'user': user
             }
         )
 

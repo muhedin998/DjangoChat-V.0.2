@@ -67,82 +67,14 @@
                 </div>
             </div>
         </div>
+   
     </div>
   
 
     {{ room_name|json_script:"room-name" }}
-    <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
-        var username;
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-        );
-        //Pronalzasenje ulogovanog korisnika
-        function getLogonUser() {
-        var clientContext = new SP.ClientContext(chatSocket);
-        this.website = clientContext.get_web();
-        this.currentUser = website.get_currentUser();
-        clientContext.load(currentUser);
-        clientContext.executeQueryAsync(Function.createDelegate(this, this.userQuerySucceeded), Function.createDelegate(this, this.userQueryFailed));
+    {{ user.username|json_script:"curUser" }}
+    <script src={% static 'js/chat.js' %} type="module">
 
-    }
-
-    function userQuerySucceeded(sender, args) {
-        this.username = currentUser.get_loginName();
-        alert('Username:' + this.username);
-    }
-
-    function userQueryFailed(sender, args) {
-        alert('request failed ' + args.get_message() + '\n' + args.get_stackTrace());
-    }
-
-
-    function showName(){
-        getLogonUser();
-
-}     
-
-        //Ucitavanje poruka 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            var newDiv = document.createElement("p");
-            newDiv.classList.add("mystyle");
-            newDiv.classList.add("col-md-6");
-            if (data.user === '{{user.username}}'){
-              newDiv.classList.add("offset-md-6");
-            }
-            newDiv.innerHTML = data.user + ': ' + data.message;
-            document.querySelector('#chat-log').appendChild(newDiv);
-            console.log(getLogonUser());
-            
-            var kocka = document.getElementById("chat-log");
-            kocka.scrollTop = kocka.scrollHeight;
-        };
-
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
-        //Enter Radi kao Send
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
-
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'user': '{{user.username}}'
-            }));
-            messageInputDom.value = '';
-        };
     </script>
 </body>
 </html>

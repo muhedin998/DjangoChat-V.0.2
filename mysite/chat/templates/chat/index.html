@@ -4,8 +4,15 @@
    
     <input id="room-name-input" class="form-control" type="text" placeholder="What room u want to join?" size="100"><br>
     <input id="room-name-submit" class="btn btn-primary" type="button" value="Enter">
-
+    <select name="select" id="rooms" class="form-select" onchange="changeRoom()">
+        <option value="" disabled selected>Select your room</option>
+        <option value="General">General</option>
+        <option value="Public">Public</option>
+    </select>
     <script>
+        var roomName;
+        var selRooms = document.getElementById("rooms");
+
         document.querySelector('#room-name-input').focus();
         document.querySelector('#room-name-input').onkeyup = function(e) {
             if (e.keyCode === 13) {  // enter, return
@@ -14,8 +21,15 @@
         };
 
         document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
+            roomName = document.querySelector('#room-name-input').value;  
+            var newOpt = document.createElement('option');
+            newOpt.innerHTML = roomName;
+            selRooms.appendChild(newOpt);         
             window.location.pathname = '/chat/' + roomName + '/';
         };
+        function changeRoom(){
+            roomName = selRooms.value;
+            window.location.pathname = '/chat/' + roomName + '/';
+        }
     </script>
 {% endblock %}
