@@ -6,8 +6,9 @@
     <input id="room-name-submit" class="btn btn-primary" type="button" value="Enter">
     <select name="select" id="rooms" class="form-select" onchange="changeRoom()">
         <option value="" disabled selected>Select your room</option>
-        <option value="General">General</option>
-        <option value="Public">Public</option>
+        {% for soba in sobe %}
+        <option>{{soba.name}}</option>
+        {% endfor %}
     </select>
     <script>
         var roomName;

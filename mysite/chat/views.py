@@ -1,17 +1,29 @@
 from django.contrib.auth import login, authenticate, logout
 from django.http import request
 from .forms import ProfilForm
+from .models import ChatRoom, Chat
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url = 'login')
 def index(request):
-    return render(request, 'chat/index.html', {})
+    sobe = ChatRoom.objects.all()
+    return render(request, 'chat/index.html', {'sobe':sobe})
 
 @login_required(login_url = 'login')
 def room(request, room_name):
+    room = ChatRoom.objects.filter(name=room_name).first()
+    chats =[]
+
+    if room:
+        chats = Chat.objects.filter(room=room)
+    else:
+        room = ChatRoom(name=room_name)
+        room.save()
+
     return render(request, 'chat/room.html', {
-        'room_name': room_name
+        'room_name': room_name,
+        'chats': chats
     })
 
 def register(request):

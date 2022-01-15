@@ -9,15 +9,11 @@ class Profil(User):
         return self.username
 
 
-class Message(models.Model):
-    def __init__(self, content, sender):
-        self.content = content
-        self.sender = sender
+class Chat(models.Model):
+    content = models.CharField(max_length=1000)
+    timestamp = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey('ChatRoom', on_delete=models.CASCADE)
 
-    def poruka(self):
-        return self.content
-
-
-class Room(models.Model):
-    def __init__(self, room_name):
-        self.room_name = room_name
+class ChatRoom(models.Model):
+    name = models.CharField(max_length=255)
